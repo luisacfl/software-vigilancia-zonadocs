@@ -280,10 +280,10 @@
         "costos_cat": "Entre medio y 1 millón de pesos mexicanos"
     },
     {
-        "software": "Se desconoce nombre. Software de Extracción de Información y Licencia de Sistema de Extracción Forense",
+        "software": "Nombre desconocido.",
         "id_licencia": 2.0,
         "tipo_tecnologia": "Extracción de datos",
-        "descripcion_corta": "Reservado",
+        "descripcion_corta": "Software de Extracción de Información y Licencia de Sistema de Extracción Forense. \n\n",
         "empresa_creadora": "Reservado",
         "empresa_vendedora": "RAMIR, S.A. DE C.V.",
         "pais_creador": "Reservado",
@@ -320,10 +320,10 @@
         "costos_cat": "Entre de 5 y 10 millones de pesos mexicanos"
     },
     {
-        "software": "Software diversos: Software especializado en Análisis Forense Digital; Software especializado, licencias Axiom Magnet, Axiom Computer y Axiom Smartphone; Software especializado, licencias de uso para programa de recuperación y extracción de archivos de video dvr examiner y metadatos; Software Especializado Análisis Forense Digital (fuentes digitales); Licencias Encase Forense.",
+        "software": "Diversos software.",
         "id_licencia": 5.0,
         "tipo_tecnologia": "Análisis forense digital y de datos abiertos",
-        "descripcion_corta": "Examinar datos de código abierto, recolectar datos digitales y de fuentes móviles, recuperar datos borrados, explorar el historial completo de un archivo, realizar análisis y presentar los descubrimientos en un formato.",
+        "descripcion_corta": "Softwares: <b>Software especializado en Análisis Forense Digital; Software especializado, licencias Axiom Magnet, Axiom Computer y Axiom Smartphone; Software especializado, licencias de uso para programa de recuperación y extracción de archivos de video dvr examiner y metadatos; Software Especializado Análisis Forense Digital (fuentes digitales); Licencias Encase Forense.</b> <br> <br> Examinar datos de código abierto, recolectar datos digitales y de fuentes móviles, recuperar datos borrados, explorar el historial completo de un archivo, realizar análisis y presentar los descubrimientos en un formato.",
         "empresa_creadora": "Magnet Forensics y Opentext",
         "empresa_vendedora": "E TRANSFORMATION S. DE R.L. DE C.V.",
         "pais_creador": "Canadá",
@@ -340,10 +340,10 @@
         "costos_cat": "Entre 1 y 5 millones de pesos mexicanos"
     },
     {
-        "software": "Software diversos: IBM i2 Enterprise Insight Analysis Recommendation Engine; Social Networks Analysis MKCVI; Rosoka Text Analytics (RTA).",
+        "software": "Software diversos",
         "id_licencia": 3.0,
         "tipo_tecnologia": null,
-        "descripcion_corta": "Rosoka: En más de 200 idiomas, Rosoka analiza textos no estructurados; Identificar y extraer las entidades y relaciones importantes junto con su información relevante. \nRosoka realiza análisis geoespaciales y proporciona a los usuarios las coordenadas para su uso con el software de mapeo de su elección. \nLos análisis de sentimientos de Rosoka te dicen si el lenguaje es persuasivo o controlador, positivo o negativo, feliz o triste, o incluso qué tan probable es que un lector reaccione. \nEstas capacidades estrechamente integradas brindan la información que su organización necesita para tomar decisiones informadas.\n\nhttps://docs.i2group.com/release-material/eia/2.5.0/i2-eia-2.5.0.html \n\nSocial Networks Analysis MKCVI: Visualizamos vínculos, correlacionamos datos, analizamos patrones y comportamientos.\n\nMostramos esta información por medio de gráficos y diagramas, utilizando entidades y enlaces para resaltar las relaciones.\n\nBuscamos a través de consultas visuales y definimos las dimensiones a analizar, construyendo cuadros de mando con KPIs o métricas adaptadas a la realidad de nuestros clientes. A continuación, dibujamos nuevas representaciones gráficas para abordar casos concretos, y monitorizamos esa información.\n\nEnterprise: Conversor de datos: i2 Enterprise Insight Analysis es una solución abierta, interoperable, ampliable y escalable que permite a las organizaciones convertir datos abrumadores y dispares en conocimientos e inteligencia procesables, casi en tiempo real.\n\ni2 Enterprise Insight Analysis ayuda a los analistas e investigadores a desarrollar una comprensión integral del panorama de amenazas para identificar vulnerabilidades e interrumpir las amenazas. La combinación de análisis dirigidos por máquinas y capacidades de análisis dirigidos por humanos ayuda a encontrar conexiones ocultas y patrones críticos que están enterrados en datos internos, externos y de código abierto.",
+        "descripcion_corta": "<b>IBM i2 Enterprise Insight Analysis Recommendation Engine; Social Networks Analysis MKCVI; Rosoka Text Analytics (RTA).</b> <br>Rosoka: En más de 200 idiomas, Rosoka analiza textos no estructurados; Identificar y extraer las entidades y relaciones importantes junto con su información relevante. \nRosoka realiza análisis geoespaciales y proporciona a los usuarios las coordenadas para su uso con el software de mapeo de su elección. \nLos análisis de sentimientos de Rosoka te dicen si el lenguaje es persuasivo o controlador, positivo o negativo, feliz o triste, o incluso qué tan probable es que un lector reaccione. \nEstas capacidades estrechamente integradas brindan la información que su organización necesita para tomar decisiones informadas.\n\nhttps://docs.i2group.com/release-material/eia/2.5.0/i2-eia-2.5.0.html \n\nSocial Networks Analysis MKCVI: Visualizamos vínculos, correlacionamos datos, analizamos patrones y comportamientos.\n\nMostramos esta información por medio de gráficos y diagramas, utilizando entidades y enlaces para resaltar las relaciones.\n\nBuscamos a través de consultas visuales y definimos las dimensiones a analizar, construyendo cuadros de mando con KPIs o métricas adaptadas a la realidad de nuestros clientes. A continuación, dibujamos nuevas representaciones gráficas para abordar casos concretos, y monitorizamos esa información.\n\nEnterprise: Conversor de datos: i2 Enterprise Insight Analysis es una solución abierta, interoperable, ampliable y escalable que permite a las organizaciones convertir datos abrumadores y dispares en conocimientos e inteligencia procesables, casi en tiempo real.\n\ni2 Enterprise Insight Analysis ayuda a los analistas e investigadores a desarrollar una comprensión integral del panorama de amenazas para identificar vulnerabilidades e interrumpir las amenazas. La combinación de análisis dirigidos por máquinas y capacidades de análisis dirigidos por humanos ayuda a encontrar conexiones ocultas y patrones críticos que están enterrados en datos internos, externos y de código abierto.",
         "empresa_creadora": "IBM i2",
         "empresa_vendedora": "CUATRO NETWORKS, S. DE R.L. DE C.V.",
         "pais_creador": "Reino Unido",

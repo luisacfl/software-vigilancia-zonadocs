@@ -12,27 +12,22 @@
   <!--Esta sección es exclusivamente para los controles-->
   <!--Creamos un botón por filtro que al ser presionado llame la función que actualiza la variable con la data filtrada-->
   <h3>Ordenar por</h3>
-  <!--<div class="radio-menu">
-    <button
-      v-for="(value, key, index) in filtros"
-      :key="index"
-      @click="filtrarTarjetas(key)"
-      class="radio-button"
-    >
-      {{ value }}
-    </button>
-  </div>-->
-  
-    <div class="radio-menu">
+
+  <div class="radio-menu">
     <div class="radio-button" v-for="(value, key, index) in filtros" :key="index">
-      <input class="radio-input" type="radio" :id="key" name= "filtros"
-        @change = "filtrarTarjetas(key)"
+      <input 
+          class="radio-input" 
+          type="radio" 
+          :id="key" 
+          :value="key"
+          :checked = "filtroSeleccionado === key"
+          @click = "seleccionarFiltro(key)"
       />
-      <label :for="key" class="radio-label">{{ value }}</label>
-    </div>
-      
-    </div>
-  <p>{{hallazgos[filtro_seleccionado]}}</p>
+      <label :for="key" :class="{ 'selected-label': filtroSeleccionado === key }" class="radio-label">{{ value }}</label>
+    </div>  
+  </div>
+
+  <p>{{hallazgos[filtroSeleccionado]}}</p>
   <!--Esta sección es para las tarjetas del software de vigilancia-->
   <div v-for="(tarjetasGrupales, grupo) in tarjetasFiltradas" :key="grupo" class="year-group">  
       <h2>{{ grupo }}</h2>
@@ -74,7 +69,15 @@ const hallazgos = ref(hallazgosArchivo);
 //data de los softwares, generado por script python
 //const tarjetas = tarjetasArchivo;
 const tarjetasFiltradas = ref();
-var filtro_seleccionado = null;
+var filtroSeleccionado = ref(null);
+
+/*const ordenCorrecto = [
+  "Más de 10 millones de pesos mexicanos", 
+  "Entre de 5 y 10 millones de pesos mexicanos", 
+  "Entre 1 y 5 millones de pesos mexicanos",
+  "Entre medio y 1 millón de pesos mexicanos",
+  "Menos de medio millón"
+  ]*/
 
 const filtros = ref({
   anio: "Año de contratación",
@@ -86,15 +89,32 @@ const filtros = ref({
 });
 
 onMounted(() => {
-  filtrarTarjetas("estado_inicial");
+  filtrarTarjetas(null);
 });
 
+function seleccionarFiltro(filtro){
+  if (filtroSeleccionado.value === filtro) {
+      filtroSeleccionado.value = null; // Deselect if the same radio button is clicked
+  } else {
+    filtroSeleccionado.value = filtro;
+  }
+  filtrarTarjetas(filtroSeleccionado);
+}
+
 function filtrarTarjetas(filtro) {
-  filtro_seleccionado = filtro;
+  //filtroSeleccionado = filtro;
+  console.log("FILTRANDO TARJETAS");
+  console.log(filtro)
+  if(filtro == null || filtro.value == null){
+    tarjetasFiltradas.value = {'Todos los softwares de vigilancia': tarjetas.value}
+  }
+  else {
   tarjetasFiltradas.value = tarjetas.value.reduce((acc, tarjeta) => {
-    (acc[tarjeta[filtro]] = acc[tarjeta[filtro]] || []).push(tarjeta);
-    return acc;
-  }, {});
+      (acc[tarjeta[filtro.value]] = acc[tarjeta[filtro.value]] || []).push(tarjeta);
+      return acc;
+    }, {});
+  }
+  
   //console.log(filtro, tarjetasFiltradas.value);
 }
 
@@ -108,6 +128,18 @@ function linkContrato(link){
 function togglePopup(software){
   software.showPopup = !software.showPopup;
 }
+
+/*function adjustFontSizeHeader(){
+  const header = cardHeader.value;
+      const maxHeight = 150; // Fixed height of the header
+      let fontSize = 1; // Starting font size, adjust as needed
+      header.style.fontSize = fontSize + 'em';
+
+      while (header.scrollHeight > maxHeight && fontSize > 10) { // Minimum font size threshold
+        fontSize -= 1;
+        header.style.fontSize = fontSize + 'px';
+      }
+}*/
 </script>
 
 
@@ -138,6 +170,7 @@ p {
 .card-header {
   background-color: #CFD8F7; /* Light gray background */
   padding: 8px;
+  height: 175px;
   font-family: Arial;
   font-weight: bold;
   font-size: 1em;
@@ -146,6 +179,7 @@ p {
 .card-body {
   background-color: #ffffff; /* White background */
   padding: 8px;
+  height: 200px;
   
 }
 
@@ -180,12 +214,12 @@ p {
   transition: background-color 0.3s, border-color 0.3s;
 }
 
-.radio-button.selected .radio-label {
-  background-color: #007bff;
-  border-color: #007bff;
-  color: white;
-}
 
+.radio-label.selected-label {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
 .popup-overlay {
   position: fixed;
   top: 0;
