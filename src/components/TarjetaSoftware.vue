@@ -42,6 +42,8 @@
             </div>
             <div class="card-body">
               <p>{{software['descripcion_corta']}}</p>
+            </div>
+            <div class="card-buttons">
               <button v-if="software['mas_info']" @click="togglePopup(software)">Más info</button>
               <button @click="linkContrato(software['link_contrato'])">Consulta contrato</button>
             </div>
@@ -174,17 +176,49 @@ p {
   font-family: Arial;
   font-weight: bold;
   font-size: 1em;
+  
 }
 
 .card-body {
   background-color: #ffffff; /* White background */
   padding: 8px;
   height: 200px;
-  
+  overflow-y:auto;
 }
 
 .card-title {
   font-size: 1.3em;
+}
+
+.card-buttons {
+  padding: 8px;
+  background: #cfd8f7;
+  display: flex;
+  justify-content: center;
+  gap: 00px;
+}
+
+button {
+  font:inherit;
+  padding: 10px 20px;
+  margin: 4px;
+  border-radius: 8px;
+  justify-content: center;
+	align-items: center;
+	flex-shrink: 0;
+	font-size: 1rem;
+	transition: .25s ease;
+	z-index: 1;
+	cursor: pointer;
+	color: #565656;
+  border: 2px solid transparent;
+  background-color: white;
+  &:hover, &:focus {
+		background-color: #abdbe3;
+		color: #565656;
+    outline: none;
+	}
+
 }
 
 .card-subtitle {
@@ -230,6 +264,7 @@ p {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index:2;
 }
 
 .popup {
@@ -241,6 +276,7 @@ p {
   max-height: 80%;
   overflow: auto;
   position: relative;
+  z-index:2;
 }
 
 .close {
