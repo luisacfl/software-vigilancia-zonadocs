@@ -45,7 +45,7 @@
             </div>
             <div class="card-buttons">
               <button v-if="software['mas_info']" @click="togglePopup(software)">Más info</button>
-              <button @click="linkContrato(software['link_contrato'])">Consulta contrato</button>
+              <button v-if="software['link_contrato']" @click="linkContrato(software['link_contrato'])">Consulta contrato</button>
             </div>
             <div class="popup-overlay" v-if="software['showPopup']">
               <div class="popup">
