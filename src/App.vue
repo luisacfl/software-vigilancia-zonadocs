@@ -2,16 +2,18 @@
   <!--Esta sección es la introducción-->
   <div class="header">
     <h1>Software de vigilancia en jalisco</h1>
-    <p>
-      Texto introductorio sobre los datos. <br />
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-      commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-      velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-      cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-      est laborum
-    </p>
+    <div class="textointro">
+      <p>
+        Texto introductorio sobre los datos. <br />
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+        cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+        est laborum
+      </p>
+    </div>
   </div>
   <h3>Investigación completa</h3>
   <button>Ilustración de la historia general</button>
@@ -38,12 +40,18 @@ import TarjetaSoftware from "./components/TarjetaSoftware.vue";
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Open sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: black;
   margin-top: 60px;
+}
+
+.textointro {
+  display: flex;
+  text-align: left;
+  margin: 100px;
 }
 
 .simbolo {

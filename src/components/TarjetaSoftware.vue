@@ -1,10 +1,20 @@
 <template>
   <!--Esta sección es exclusivamente para la parte de la simbología-->
-  <h3>Simbología</h3>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <h3 class="seccion">Simbología</h3>
   <div class="simbologia">
     <div class="simbolo">
-      <img src="../assets/logo.png" height="25" width="25" />
+      <img src="../assets/bank.png" height="25" width="25" />
       <p>Dependencia por la que fue adquirido</p>
+    </div>
+    <div class="simbolo">
+      <img src="../assets/building.png" height="25" width="25" />
+      <p>Empresa vendedora</p>
+    </div>
+    <div class="simbolo">
+      <img src="../assets/paper.png" height="25" width="25" />
+      <p>Costo de compra</p>
     </div>
   </div>
 
@@ -23,41 +33,112 @@
           :checked = "filtroSeleccionado === key"
           @click = "seleccionarFiltro(key)"
       />
-      <label :for="key" :class="{ 'selected-label': filtroSeleccionado === key }" class="radio-label">{{ value }}</label>
+      <label 
+        :for="key" 
+        :class="{ 'selected-label': filtroSeleccionado === key }" 
+        class="radio-label">
+        {{ value }}</label>
     </div>  
   </div>
 
-  <p>{{hallazgos[filtroSeleccionado]}}</p>
+  <!--Primero agregamos el hallazgo-->
+  <p class="hallazgo" v-if="hallazgos[filtroSeleccionado] != null">
+    {{ hallazgos[filtroSeleccionado] }}
+  </p>
   <!--Esta sección es para las tarjetas del software de vigilancia-->
-  <div v-for="(tarjetasGrupales, grupo) in tarjetasFiltradas" :key="grupo" class="year-group">  
-      <h2>{{ grupo }}</h2>
-        <div class="cards" >
-          <div class="card" v-for="software in tarjetasGrupales" :key="software.id">
-            <div class="card-header">
-              <h2 class="card-title">{{software['software']}}</h2>
-              <div class="card-subtitle">
-              <p class="card-subtitle">{{software['anio']}} | {{software['empresa_creadora']}} | {{software['pais_creador']}}</p> </div>
-              <p>{{software['empresa_vendedora']}}</p>
-              <p>{{software['costo']}}</p>
+  <div v-for="grupo in listaFiltros" :key="grupo" class="grupo-tarjetas">
+    <h2 class="categoria">{{ grupo }}</h2>
+    <div class="cards">
+      <div
+        class="card"
+        v-for="software in tarjetasFiltradas[grupo]"
+        :key="software.id"
+      >
+        <div class="card-header">
+          <!--Esta sección corresponde al header, solo al titulo y subtitulo-->
+          <h2 class="card-title">{{ software["software"] }}</h2>
+          <p class="card-subtitle">
+            {{ software["anio"] }} | {{ software["empresa_creadora"] }} |
+            {{ software["pais_creador"] }}
+          </p>
+
+          <!--Esta sección corresponde al header, al texto con los iconos-->
+          <div class="info-header">
+            <img src="../assets/bank.png" height="20" />
+            <p>{{ software["dependencia"] }}</p>
+          </div>
+          <div class="info-header">
+            <img src="../assets/building.png" height="20" />
+            <p>{{ software["empresa_vendedora"] }}</p>
+          </div>
+          <div class="info-header">
+            <img src="../assets/paper.png" height="20" />
+            <p>{{ software["costo"] }}</p>
+          </div>
+          <button
+              v-if="software['link_contrato']"
+              @click="openLink(software['link_contrato'])"
+              :href="software['link_contrato']"
+              target="_blank"
+              class="consulta-button-header"
+              >Consulta contrato
+            </button>
+        </div>
+
+        <!--Este es el recuadro blanco-->
+        <div class="card-body">
+          <p>{{ software["descripcion_corta"] }}</p>
+          <div v-if="software['mas_info']" class="extra-info-buttons-container">
+            <button
+              v-if="software['mas_info']"
+              @click="togglePopup(software)"
+              class="extra-info-buttons"
+            >
+              Más info
+            </button>
+          </div>
+        </div>
+        <!--Esta es la sección de más info-->
+
+        <div class="popup-overlay" v-if="software['showPopup']">
+          <div class="popup">
+            <div class="popup-header">
+              <!--Esta sección corresponde al header, al texto con los iconos-->
+              <h2 class="card-title">{{ software["software"] }}</h2>
+              <p class="popup-subtitle">
+                {{ software["anio"] }} | {{ software["empresa_creadora"] }} |
+                {{ software["pais_creador"] }}
+              </p>
+              <div class="info-header">
+                <img src="../assets/bank.png" height="20" />
+                <p>{{ software["dependencia"] }}</p>
+              </div>
+              <div class="info-header">
+                <img src="../assets/building.png" height="20" />
+                <p>{{ software["empresa_vendedora"] }}</p>
+              </div>
+              <div class="info-header">
+                <img src="../assets/paper.png" height="20" />
+                <p>{{ software["costo"] }}</p>
+              </div>
             </div>
-            <div class="card-body">
-              <p>{{software['descripcion_corta']}}</p>
-            </div>
-            <div class="card-buttons">
-              <button v-if="software['mas_info']" @click="togglePopup(software)">Más info</button>
-              <button v-if="software['link_contrato']" @click="linkContrato(software['link_contrato'])">Consulta contrato</button>
-            </div>
-            <div class="popup-overlay" v-if="software['showPopup']">
-              <div class="popup">
-                <span class="close" @click="togglePopup(software)">&times;</span>
-                <h2>{{ software['software'] }}</h2>
-                <p>{{ software['info_extra']}}</p>
+            <span class="close" @click="togglePopup(software)">&times;</span>
+            <div class="popup-body">
+              <p>{{ software["info_extra"] }}</p>
+              <div class="popup-button">
+                <a
+                  :href="software['link_contrato']"
+                  target="_blank"
+                  class="extra-info-buttons"
+                  >Consulta contrato
+                </a>
               </div>
             </div>
           </div>
         </div>
+      </div>
+    </div>
   </div>
-
 </template>
 
 <script setup>
@@ -72,6 +153,7 @@ const hallazgos = ref(hallazgosArchivo);
 //const tarjetas = tarjetasArchivo;
 const tarjetasFiltradas = ref();
 var filtroSeleccionado = ref(null);
+const listaFiltros = ref();
 
 /*const ordenCorrecto = [
   "Más de 10 millones de pesos mexicanos", 
@@ -116,15 +198,54 @@ function filtrarTarjetas(filtro) {
       return acc;
     }, {});
   }
-  
+  // Queremos dejar las categorías "Sin información", 'null' y 'Reservado' hasta el final
+  // Entonces necesitamos una estructura ordenada
+  // Vamos a obtener cada opción del filtro de manera programática,
+  // pero para ordenar los costos vamos a usar card-code
+  if (filtroSeleccionado.value == "costos_cat") {
+    listaFiltros.value = [
+      "Menos de medio millón",
+      "Entre medio y 1 millón de pesos mexicanos",
+      "Entre 1 y 5 millones de pesos mexicanos",
+      "Entre de 5 y 10 millones de pesos mexicanos",
+      "Más de 10 millones de pesos mexicanos",
+    ];
+  } else {
+    listaFiltros.value = Object.keys(tarjetasFiltradas.value);
+  }
+  // Una vez creada la lista vamos a ordenarla
+  // Ahora vamos a mandar al final de la lista la opción de Reservado
+  if (listaFiltros.value.includes("Reservado")) {
+    listaFiltros.value = listaFiltros.value.filter(
+      (word) => word != "Reservado"
+    );
+    listaFiltros.value.push("Reservado");
+  }
+  // Después de Reservado iría la categoría "Sin información"
+  if (listaFiltros.value.includes("Sin información")) {
+    console.log("había sin información");
+    listaFiltros.value = listaFiltros.value.filter(
+      (word) => word != "Sin información"
+    );
+    listaFiltros.value.push("Sin información");
+  }
+  // Finalmente dejamos los que son null
+  if (listaFiltros.value.includes("null")) {
+    console.log("había null");
+    listaFiltros.value = listaFiltros.value.filter((word) => word != "null");
+    listaFiltros.value.push("null");
+  }
+  console.log(listaFiltros.value);
+
   //console.log(filtro, tarjetasFiltradas.value);
 }
 
-function linkContrato(link){
-  const newWindow = window.open = (link, '_blank');
-  if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+function openLink(link){
+  //const newWindow = window.open = (link, '_blank');
+  /*if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
       window.location.href = link;
-    }
+    }*/
+  window.open(link, '_blank');
 }
 
 function togglePopup(software){
@@ -147,86 +268,106 @@ function togglePopup(software){
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+@import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
+.seccion {
+  text-align: left;
+}
+.simbologia {
+  display: flex;
+  gap: 2%;
+}
 p {
-  margin:4px;
+  margin: 3px;
+  text-align: left;
+  font-size: 16px;
 }
 
+.grupo-tarjetas {
+  padding: 10px;
+}
+
+.hallazgo {
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  margin-top: 20px;
+  text-align: justify;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.categoria {
+  text-align: left;
+  margin-left: 15px;
+
+  margin-bottom: 3px;
+}
 .cards {
   display: flex;
   flex-wrap: wrap;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  gap: 0.5%;
+  justify-content: flex-start;
 }
 
 .card {
   border: 1px solid #ccc;
   border-radius: 8px;
   overflow: hidden;
-  width: 300px;
-  margin: .5em;
+  width: 320px;
+  margin: 0.5em;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .card-header {
-  background-color: #CFD8F7; /* Light gray background */
+  display:flex;
+  flex-direction: column;
+  align-content: center;
+  background-color: #FFF;
   padding: 8px;
-  height: 175px;
-  font-family: Arial;
+  /*height: 280px;*/
+  font-family: 'Muli', sans-serif;
   font-weight: bold;
   font-size: 1em;
-  
 }
 
+.info-header {
+  margin: 0px;
+  padding: 0px;
+  height: auto;
+}
 .card-body {
   background-color: #ffffff; /* White background */
   padding: 8px;
-  height: 200px;
-  overflow-y:auto;
+  height: 250px;
+  overflow: scroll;
 }
 
 .card-title {
   font-size: 1.3em;
-}
-
-.card-buttons {
-  padding: 8px;
-  background: #cfd8f7;
-  display: flex;
-  justify-content: center;
-  gap: 00px;
-}
-
-button {
-  font:inherit;
-  padding: 10px 20px;
-  margin: 4px;
-  border-radius: 8px;
-  justify-content: center;
-	align-items: center;
-	flex-shrink: 0;
-	font-size: 1rem;
-	transition: .25s ease;
-	z-index: 1;
-	cursor: pointer;
-	color: #565656;
-  border: 2px solid transparent;
-  background-color: white;
-  &:hover, &:focus {
-		background-color: #abdbe3;
-		color: #565656;
-    outline: none;
-	}
-
+  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 .card-subtitle {
-  color: #6D6D6D;
+  color: #195c4b;
+  margin-bottom: 10px;
+  text-align: center;
+  margin-bottom: 15px;
 }
 
+.info-header {
+  display: flex;
+  align-items: center;
+}
+
+img {
+  vertical-align: middle;
+  margin: 3px;
+}
 .radio-menu {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 10px;
 }
 
@@ -244,15 +385,20 @@ button {
   padding: 10px 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  background-color: #f0f0f0;
+  /* background-color: #f0f0f0;*/
+  background-color: #d9d9d9;
+  cursor: pointer;
   transition: background-color 0.3s, border-color 0.3s;
+  font-size: 16px;
+  font-weight: bold;
 }
 
-
 .radio-label.selected-label {
-  background-color: #007bff;
+  background-color: #5294e0;
+  border-color: #5294e0;
+  /*     border-color: #007bff;
+  background-color: #007bff; */
   color: white;
-  border-color: #007bff;
 }
 .popup-overlay {
   position: fixed;
@@ -264,19 +410,39 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index:2;
 }
 
 .popup {
   background-color: white;
-  padding: 20px;
+  padding: 0px;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  max-width: 80%;
+  max-width: 60%;
   max-height: 80%;
   overflow: auto;
   position: relative;
-  z-index:2;
+}
+
+.popup-header {
+  background-color: #cfd8f7;
+  padding: 10px 40px;
+}
+
+.popup-body {
+  padding: 20px 40px;
+}
+
+.popup-subtitle {
+  color: #6d6d6d;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.popup-button {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 30px;
 }
 
 .close {
@@ -287,5 +453,64 @@ button {
   cursor: pointer;
   color: #aaa;
 }
+.extra-info-buttons-container {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 15px;
+}
 
+.extra-info-buttons {
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  background-color: #d9d9d9;
+  cursor: pointer;
+  padding: 4px;
+  font-weight: bold;
+  font-size: 14px;
+  color: black;
+  text-decoration: none;
+}
+.consulta-button-header:hover,
+.consulta-button-header:focus {
+  background-color: #F1A805;
+}
+
+.consulta-button-header{
+  
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  background-color: #F2D6A1;
+  cursor: pointer;
+  padding: 4px 16px;
+  font-weight: bold;
+  font-size: 14px;
+  color: black;
+  text-decoration: none;
+  margin: 7px;
+  align-self: left;
+  margin-top: 15px;
+  border: 1px solid #ccc;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+a:active,
+a:active {
+  color: #19578a;
+}
+@media (max-width: 769px) {
+  .grupo-tarjetas {
+    padding: 0px;
+  }
+  .card {
+    width: 90%;
+    margin: 15px;
+  }
+  .card-header {
+    height: 200px;
+  }
+
+  .popup {
+    max-width: 85%;
+  }
+}
 </style>
