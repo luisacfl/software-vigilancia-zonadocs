@@ -1,9 +1,34 @@
 <template>
   <!--Esta sección es exclusivamente para la parte de la simbología-->
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <h1 class="seccion">Datos sobre los Software de Vigilancia</h1>
+    <h3 class="seccion" style="margin-left: 15px;">Simbología</h3>
 
-    <h3 class="seccion">Simbología</h3>
-  <div class="simbologia">
+    <div class="card">
+        <div class="card-header">
+          <!--Esta sección corresponde al header, solo al titulo y subtitulo-->
+          <h2 class="card-title">Nombre del software</h2>
+          <p class="card-subtitle">
+            Año de contratación | Nombre de la empresa creadora |
+            País de origen
+          </p>
+
+          <!--Esta sección corresponde al header, al texto con los iconos-->
+          <div class="info-header">
+            <img src="../assets/bank.png" height="20" />
+            <p>Dependencia que adquiere el software</p>
+          </div>
+          <div class="info-header">
+            <img src="../assets/building.png" height="20" />
+            <p>Empresa vendedora</p>
+          </div>
+          <div class="info-header">
+            <img src="../assets/paper.png" height="20" />
+            <p>Costo de compra</p>
+          </div>
+        </div>
+   </div>     
+  <!-- <div class="simbologia">
     <div class="simbolo">
       <img src="../assets/bank.png" height="25" width="25" />
       <p>Dependencia por la que fue adquirido</p>
@@ -16,12 +41,12 @@
       <img src="../assets/paper.png" height="25" width="25" />
       <p>Costo de compra</p>
     </div>
-  </div>
+  </div> -->
 
   <!--Esta sección es exclusivamente para los controles-->
   <!--Esta sección es exclusivamente para los controles-->
   <!--Creamos un botón por filtro que al ser presionado llame la función que actualiza la variable con la data filtrada-->
-  <h3>Ordenar por</h3>
+  <h3></h3>
 
   <div class="radio-menu">
     <div class="radio-button" v-for="(value, key, index) in filtros" :key="index">
@@ -49,11 +74,7 @@
   <div v-for="grupo in listaFiltros" :key="grupo" class="grupo-tarjetas">
     <h2 class="categoria">{{ grupo }}</h2>
     <div class="cards">
-      <div
-        class="card"
-        v-for="software in tarjetasFiltradas[grupo]"
-        :key="software.id"
-      >
+      <div class="card" v-for="software in tarjetasFiltradas[grupo]" :key="software.id">
         <div class="card-header">
           <!--Esta sección corresponde al header, solo al titulo y subtitulo-->
           <h2 class="card-title">{{ software["software"] }}</h2>
@@ -75,6 +96,8 @@
             <img src="../assets/paper.png" height="20" />
             <p>{{ software["costo"] }}</p>
           </div>
+        </div>
+        <div class="buttons-header">
           <button
               v-if="software['link_contrato']"
               @click="openLink(software['link_contrato'])"
@@ -83,10 +106,15 @@
               class="consulta-button-header"
               >Consulta contrato
             </button>
-        </div>
-
+          <button
+              class="mas-info-button-header"
+              @click="togglePopup(software)"
+              >Más info.
+          </button>
+          </div>
+      
         <!--Este es el recuadro blanco-->
-        <div class="card-body">
+          <!--<div class="card-body">
           <p>{{ software["descripcion_corta"] }}</p>
           <div v-if="software['mas_info']" class="extra-info-buttons-container">
             <button
@@ -97,7 +125,7 @@
               Más info
             </button>
           </div>
-        </div>
+        </div>-->
         <!--Esta es la sección de más info-->
 
         <div class="popup-overlay" v-if="software['showPopup']">
@@ -105,6 +133,7 @@
             <div class="popup-header">
               <!--Esta sección corresponde al header, al texto con los iconos-->
               <h2 class="card-title">{{ software["software"] }}</h2>
+              <div class="popup-subtitles">
               <p class="popup-subtitle">
                 {{ software["anio"] }} | {{ software["empresa_creadora"] }} |
                 {{ software["pais_creador"] }}
@@ -122,17 +151,26 @@
                 <p>{{ software["costo"] }}</p>
               </div>
             </div>
+            <button
+              v-if="software['link_contrato']"
+              @click="openLink(software['link_contrato'])"
+              :href="software['link_contrato']"
+              target="_blank"
+              class="consulta-button-header"
+              >Consulta contrato
+            </button>
             <span class="close" @click="togglePopup(software)">&times;</span>
+            </div>
+            
             <div class="popup-body">
+            <!--AQUI CAMBIO EN EL POPUP-->
+              <!--condicional de descripcion corta-->
+              <h4 class="header-popup">Descripción general del software</h4>
+              <p>{{ software["descripcion_corta"] }}</p>
+              <!--condicional de info extra-->
+              <!--cambiar info extra a su lugar-->
+              <h4 class="header-popup" v-if="software['mas_info']">Información sobre el contrato</h4>
               <p>{{ software["info_extra"] }}</p>
-              <div class="popup-button">
-                <a
-                  :href="software['link_contrato']"
-                  target="_blank"
-                  class="extra-info-buttons"
-                  >Consulta contrato
-                </a>
-              </div>
             </div>
           </div>
         </div>
@@ -276,6 +314,11 @@ function togglePopup(software){
   display: flex;
   gap: 2%;
 }
+.header-popup {
+  display: flex;
+  justify-content: flex-start;
+}
+
 p {
   margin: 3px;
   text-align: left;
@@ -289,11 +332,13 @@ p {
 .hallazgo {
   padding-left: 20px;
   padding-right: 20px;
-  padding-top: 10px;
+  padding-top: 15px;
+  padding-bottom: 15px;
   margin-top: 20px;
   text-align: justify;
   font-size: 18px;
   font-weight: bold;
+  background-color: #f4f6ff;
 }
 
 .categoria {
@@ -307,15 +352,21 @@ p {
   flex-wrap: wrap;
   gap: 0.5%;
   justify-content: flex-start;
+  align-content: space-evenly;
+  background: #eae9e7;
 }
 
 .card {
+  display: flex;
+  flex-direction: column; /* Arrange content in a column */
+  justify-content: space-between; /* Space out content and button group */
   border: 1px solid #ccc;
   border-radius: 8px;
   overflow: hidden;
   width: 320px;
   margin: 0.5em;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background:#f4f6ff;
 }
 
 .card-header {
@@ -382,6 +433,7 @@ img {
 }
 
 .radio-label {
+  /*font-family: 'Muli', sans-serif;*/
   padding: 10px 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -394,7 +446,7 @@ img {
 }
 
 .radio-label.selected-label {
-  background-color: #5294e0;
+  background-color: #7686f2 ;
   border-color: #5294e0;
   /*     border-color: #007bff;
   background-color: #007bff; */
@@ -413,21 +465,47 @@ img {
 }
 
 .popup {
+  display: flex;
+  flex-direction: column; 
   background-color: white;
   padding: 0px;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  font-family: 'Muli', sans-serif;
+
   max-width: 60%;
   max-height: 80%;
+
+ /* Maintain flexible width and height */
+  width: 60%; /* Can adjust according to screen size */
+  height: auto; /* Adjust height automatically */
+
+  /* Set maximum size in pixels */
+  max-width: 800px; /* Maximum width in pixels */
+  /*max-height: 600px;*/ /* Maximum height in pixels */
+
+  /* Ensure it doesn't get too small */
+  min-width: 300px; /* Minimum width in pixels */
+  min-height: 200px; /* Minimum height in pixels */
+
   overflow: auto;
   position: relative;
 }
 
 .popup-header {
-  background-color: #cfd8f7;
+  display: flex;
+  flex-direction: column; 
+  justify-content: center;
+  align-items: center;
+  background-color: #f4f6ff;
   padding: 10px 40px;
+  position: sticky;
+  top:0;
 }
-
+.popup-subtitles{
+  
+  text-align: left;
+}
 .popup-body {
   padding: 20px 40px;
 }
@@ -470,25 +548,54 @@ img {
   color: black;
   text-decoration: none;
 }
-.consulta-button-header:hover,
-.consulta-button-header:focus {
-  background-color: #F1A805;
+
+
+.card-header {
+  flex-grow: 1;
 }
 
-.consulta-button-header{
-  
+.consulta-button-header:hover,
+.consulta-button-header:focus {
+  background-color: #f4f6ff ;
+  color: #4a26fd;
+}
+
+.consulta-button-header{ 
   border: 2px solid #ccc;
   border-radius: 5px;
-  background-color: #F2D6A1;
+  background-color: #f4f6ff;
   cursor: pointer;
   padding: 4px 16px;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 16px;
   color: black;
   text-decoration: none;
   margin: 7px;
   align-self: left;
   margin-top: 15px;
+  border: 1px solid black;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.mas-info-button-header:hover,
+.mas-info-button-header:focus {
+  background-color: #4a26fd ;
+  color: white;
+}
+
+.mas-info-button-header{ 
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  background-color: #7686f2;
+  color:white;
+  cursor: pointer;
+  padding: 4px 16px;
+  font-weight: bold;
+  font-size: 16px;
+  text-decoration: none;
+  margin: 7px;
+  align-self: left;
+  margin-top: 0px;
   border: 1px solid #ccc;
   transition: background-color 0.3s, border-color 0.3s;
 }
