@@ -1,7 +1,7 @@
 <template>
   <!--Esta sección es exclusivamente para la parte de la simbología-->
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-    <h1 class="seccion">Datos sobre los Software de Vigilancia</h1>
+    <h1 class="seccion" style="text-align:center; font-size:1.8em">Datos sobre los software de Vigilancia del Gobierno de Jalisco</h1>
     <h3 class="seccion" style="margin-left: 15px;">Simbología</h3>
 
     <div class="card">
@@ -84,17 +84,19 @@
           </p>
 
           <!--Esta sección corresponde al header, al texto con los iconos-->
-          <div class="info-header">
-            <img src="../assets/bank.png" height="20" />
-            <p>{{ software["dependencia"] }}</p>
-          </div>
-          <div class="info-header">
-            <img src="../assets/building.png" height="20" />
-            <p>{{ software["empresa_vendedora"] }}</p>
-          </div>
-          <div class="info-header">
-            <img src="../assets/paper.png" height="20" />
-            <p>{{ software["costo"] }}</p>
+          <div class="card-icons">
+            <div class="info-header">
+              <img src="../assets/bank.png" height="20" />
+              <p>{{ software["dependencia"] }}</p>
+            </div>
+            <div class="info-header">
+              <img src="../assets/building.png" height="20" />
+              <p>{{ software["empresa_vendedora"] }}</p>
+            </div>
+            <div class="info-header">
+              <img src="../assets/paper.png" height="20" />
+              <p>{{ software["costo"] }}</p>
+            </div>
           </div>
         </div>
         <div class="buttons-header">
@@ -322,7 +324,7 @@ function togglePopup(software){
 p {
   margin: 3px;
   text-align: left;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .grupo-tarjetas {
@@ -336,7 +338,7 @@ p {
   padding-bottom: 15px;
   margin-top: 20px;
   text-align: justify;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
   background-color: #f4f6ff;
 }
@@ -359,16 +361,26 @@ p {
 .card {
   display: flex;
   flex-direction: column; /* Arrange content in a column */
-  justify-content: space-between; /* Space out content and button group */
+  /*justify-content: space-between;  Space out content and button group */
+  justify-content: center;
+  align-items:center;
   border: 1px solid #ccc;
   border-radius: 8px;
   overflow: hidden;
-  width: 320px;
+  width: 280px;
+  max-width: 400px;
   margin: 0.5em;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  background:#f4f6ff;
+  background:white;
+   
 }
-
+.buttons-header{
+  background:#f4f6ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width:100%;
+}
 .card-header {
   display:flex;
   flex-direction: column;
@@ -394,7 +406,7 @@ p {
 }
 
 .card-title {
-  font-size: 1.3em;
+  font-size: 1.2em;
   margin-bottom: 10px;
   margin-top: 10px;
 }
@@ -441,7 +453,7 @@ img {
   background-color: #d9d9d9;
   cursor: pointer;
   transition: background-color 0.3s, border-color 0.3s;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
 }
 
@@ -537,7 +549,7 @@ img {
   margin: 15px;
 }
 
-.extra-info-buttons {
+/*.extra-info-buttons {
   border: 2px solid #ccc;
   border-radius: 5px;
   background-color: #d9d9d9;
@@ -547,7 +559,7 @@ img {
   font-size: 14px;
   color: black;
   text-decoration: none;
-}
+}*/
 
 
 .card-header {
@@ -567,12 +579,11 @@ img {
   cursor: pointer;
   padding: 4px 16px;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 12px;
   color: black;
   text-decoration: none;
   margin: 7px;
   align-self: left;
-  margin-top: 15px;
   border: 1px solid black;
   transition: background-color 0.3s, border-color 0.3s;
 }
@@ -591,11 +602,11 @@ img {
   cursor: pointer;
   padding: 4px 16px;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 12px;
   text-decoration: none;
   margin: 7px;
   align-self: left;
-  margin-top: 0px;
+  /*margin-top: 0px;*/
   border: 1px solid #ccc;
   transition: background-color 0.3s, border-color 0.3s;
 }
@@ -613,9 +624,11 @@ a:active {
     margin: 15px;
   }
   .card-header {
-    height: 200px;
+    /*height: 200px;*/
   }
-
+  .cards {
+    justify-content: space-evenly;
+  }
   .popup {
     max-width: 85%;
   }
